@@ -1,30 +1,26 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>raspimouse_slam</name>
-  <version>0.0.2</version>
-  <description>The raspimouse_slam package</description>
+  <name>raspicat_slam</name>
+  <version>0.0.1</version>
+  <description>The raspicat_slam package</description>
 
-  <maintainer email="ryuichiueda@gmail.com">Ryuichi Ueda</maintainer>
+  <maintainer email="shop@rt-net.jp">RT Corporation</maintainer>
   <author email="ryuichiueda@gmail.com">Ryuichi Ueda</author>
+  <author email="tiryoh@gmail.com">Daisuke Sato</author>
 
-  <license>BSD</license>
+  <license>Apache License 2.0</license>
 
-  <!-- Url tags are optional, but mutiple are allowed, one per tag -->
-  <!-- Optional attribute type can be: website, bugtracker, or repository -->
-  <!-- Example: -->
-  <!-- <url type="website">http://wiki.ros.org/raspimouse_slam</url> -->
+  <url type="website">http://wiki.ros.org/raspicat_slam/wiki</url>
+  <url type="repository">http://wiki.ros.org/raspicat_slam</url>
+  <url type="bugtracker">http://wiki.ros.org/raspicat_slam/issues</url>
 
   <exec_depend>joy</exec_depend>
-  <exec_depend>raspimouse_ros_2</exec_depend>
-  <exec_depend>raspimouse_game_controller</exec_depend>
+  <exec_depend>raspicat_gamepad_controller</exec_depend>
   <exec_depend>slam_gmapping</exec_depend>
   <exec_depend>urg_node</exec_depend>
 
   <buildtool_depend>catkin</buildtool_depend>
 
-  <!-- The export tag contains other, unspecified, tags -->
   <export>
-    <!-- Other tools can request additional information be placed here -->
-
   </export>
 </package>
