@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+  <include file="$(find raspicat_gamepad_controller)/launch/run_with_base_nodes.launch" />
+
+  <node pkg="urg_node" name="urg_node" type="urg_node" required="true">
+        <param name="frame_id" value="base_link" />
+        <param name="serial_port" value="/dev/ttyACM0"/>
+  </node>
+</launch>
