@@ -1,5 +1,7 @@
 # raspicat_slam
 
+[![](https://i.gyazo.com/19308c7f22694d8a02b9a3dc3da4b5f5.jpg)](https://www.rt-shop.jp/blog/archives/11023)
+
 ## Usage
 
 ### Raspberry Pi on Raspberry Pi Cat
