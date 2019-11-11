@@ -8,12 +8,12 @@
 
 `slam_remote_robot_*_urg.launch` starts up nodes in `urg_node`, `raspicat_gamepad_controller` and `raspicat` to control the robot and publish LiDAR scan data.
 
-* when USB URG is connected e.g.) [URG-04LX-UG01](https://www.hokuyo-aut.co.jp/search/single.php?serial=17)
+* when USB URG is connected e.g.) [URG-04LX-UG01](https://www.hokuyo-aut.co.jp/search/single.php?serial=17), [UTM-30LX](https://www.hokuyo-aut.co.jp/search/single.php?serial=21)
 ```sh
 roslaunch raspicat_slam slam_remote_robot_usb_urg.launch
 ```
 
-* when Ether URG is connected e.g.) [UST-10/20LX](https://www.hokuyo-aut.co.jp/search/single.php?serial=16), [UTM-30LX](https://www.hokuyo-aut.co.jp/search/single.php?serial=21)
+* when Ether URG is connected e.g.) [UST-10LX](https://www.hokuyo-aut.co.jp/search/single.php?serial=16), [UST-20LX](https://www.hokuyo-aut.co.jp/search/single.php?serial=16)
 ```sh
 roslaunch raspicat_slam slam_remote_robot_ether_urg.launch ip_address:="192.168.0.10"
 ```
