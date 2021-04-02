@@ -1,8 +1,10 @@
 <?xml version="1.0"?>
 <launch>
   <arg name="imu" default="true" />
+  <arg name="port" default="/dev/ttyACM0" />
   <include file="$(find raspicat_gamepad_controller)/launch/run_with_base_nodes.launch">
     <arg name="imu" value="$(arg imu)" />
+    <arg name="port" value="$(arg port)" />
   </include>
 
   <node pkg="tf" type="static_transform_publisher" name="raspicat_lrf_tf_broadcaster" args="0.144 0.0 0.04 0 0 0 /base_link /urg_lrf_link 100" />
