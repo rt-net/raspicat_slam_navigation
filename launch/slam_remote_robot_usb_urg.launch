@@ -1,14 +1,17 @@
 <?xml version="1.0"?>
 <launch>
   <arg name="imu" default="true" />
+  <arg name="imu_port" default="/dev/ttyACM1" />
+  <arg name="lidar_port" default="/dev/ttyACM0" />
   <include file="$(find raspicat_gamepad_controller)/launch/run_with_base_nodes.launch">
     <arg name="imu" value="$(arg imu)" />
+    <arg name="imu_port" value="$(arg imu_port)" />
   </include>
 
   <node pkg="tf" type="static_transform_publisher" name="raspicat_lrf_tf_broadcaster" args="0.144 0.0 0.04 0 0 0 /base_link /urg_lrf_link 100" />
 
   <node pkg="urg_node" name="urg_node" type="urg_node" required="true">
     <param name="frame_id" value="urg_lrf_link" />
-    <param name="serial_port" value="/dev/ttyACM0" />
+    <param name="serial_port" value="$(arg lidar_port)" />
   </node>
 </launch>
