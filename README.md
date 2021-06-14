@@ -43,6 +43,14 @@ roslaunch raspicat_slam slam_remote_pc.launch
 
 ## License
 
+(C) 2018 RT Corporation
+
 This repository is released under the Apache License 2.0, see [LICENSE](./LICENSE).
 
-Some of the launch files are delivered from "with_gamepad" branch on [ryuichiueda/raspimouse_slam](https://github.com/ryuichiueda/raspimouse_slam), released under the MIT License.
+### Acknowledgements
+
+Some of the launch files are delivered from [ryuichiueda/raspimouse_slam](https://github.com/ryuichiueda/raspimouse_slam/tree/with_gamepad).
+* "with_gamepad" branch on [ryuichiueda/raspimouse_slam](https://github.com/ryuichiueda/raspimouse_slam/tree/with_gamepad)
+  * `Copyright (c) 2018, Ryuichi Ueda`
+  * [BSD-3-Clause](https://github.com/ryuichiueda/raspimouse_slam/blob/21bebfb6bad103fc2cf8d2f4216539e1f2dee93a/LICENSE)
+
