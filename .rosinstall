@@ -6,7 +6,3 @@
     local-name: raspicat_gamepad_controller
     uri: https://github.com/rt-net/raspicat_gamepad_controller.git
     version: melodic-devel
-- git:
-    local-name: rt_usb_9axis_driver
-    uri: https://github.com/rt-net/rt_usb_9axis_driver.git
-    version: melodic-devel

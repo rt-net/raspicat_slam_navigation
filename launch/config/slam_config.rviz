@@ -61,7 +61,7 @@ Visualization Manager:
           Value: true
         odom:
           Value: true
-        urg_lrf_link:
+        lidar_link:
           Value: true
       Marker Scale: 1
       Name: TF
@@ -72,7 +72,7 @@ Visualization Manager:
         map:
           odom:
             base_link:
-              urg_lrf_link:
+              lidar_link:
                 {}
       Update Interval: 0
       Value: true
