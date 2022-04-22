@@ -1,56 +1,224 @@
-# raspicat_slam
+# raspicat_slam_navigation
+Raspberry Pi CatでSLAMやナビゲーションを行うためのROSメタパッケージです。
 
-[![](https://i.gyazo.com/19308c7f22694d8a02b9a3dc3da4b5f5.jpg)](https://www.rt-shop.jp/blog/archives/11023)
+## Requirements
+- Raspberry Pi Cat
+  - Raspberry Pi
+    - Raspberry Pi 4 Model B
+  - Linux OS
+    - [Ubuntu Server 18.04](https://ubuntu.com/download/raspberry-pi)
+  - Device Driver
+    - [rt-net/RaspberryPiMouse](https://github.com/rt-net/RaspberryPiMouse)
+  - ROS
+    - [Melodic Morenia](https://wiki.ros.org/melodic)
+
+- Remote PC
+  - Linux OS
+    - [Ubuntu Desktop 18.04](https://ubuntu.com/download/desktop)
+  - ROS
+    - [Melodic Morenia](https://wiki.ros.org/melodic)
+
+## Installation
+### Source Build
+#### Raspberry Pi 4
+
+```sh
+# パッケージのダウンロード
+cd ~/catkin_ws/src
+wget 
+git clone -b $ROS_DISTRO-devel https://github.com/rt-net/raspicat_slam_navigation.git
+git clone -b $ROS_DISTRO-devel https://github.com/rt-net/raspicat_description.git
+git clone -b $ROS_DISTRO-devel https://github.com/rt-net/raspicat_ros.git
+```
+
+```sh
+# 依存パッケージのインストール
+rosdep update
+rosdep install -r -y -i --from-paths .
+```
+
+```sh
+# ビルド＆インストール
+cd ~/catkin_ws
+catkin_make
+source ~/catkin_ws/devel/setup.bash
+```
+#### Remote PC
+
+```sh
+# パッケージのダウンロード
+cd ~/catkin_ws/src
+git clone -b $ROS_DISTRO-devel https://github.com/rt-net/raspicat_slam_navigation.git
+git clone -b $ROS_DISTRO-devel https://github.com/rt-net/raspicat_description.git
+git clone -b $ROS_DISTRO-devel https://github.com/rt-net/raspicat_ros.git
+git clone -b $ROS_DISTRO-devel https://github.com/rt-net/raspicat_sim.git  # シミュレータを使う場合
+```
+
+```sh
+# 依存パッケージのインストール
+rosdep update
+rosdep install -r -y -i --from-paths .
+```
+
+```sh
+# ビルド＆インストール
+cd ~/catkin_ws
+catkin_make
+source ~/catkin_ws/devel/setup.bash
+```
+
+## Package Overview
+### raspicat_slam
+
+SLAMを行うためのパッケージです。
+
+このパッケージでは、以下のROSパッケージを使用してSLAMを実行することができます。
+* [gmapping](http://wiki.ros.org/gmapping)
+* [cartographer](http://wiki.ros.org/cartographer)
+* [slam_toolbox](http://wiki.ros.org/slam_toolbox)
+
+### raspicat_navigation
+
+ナビゲーションを行うためのパッケージです。
+
+このパッケージでは、以下のROSパッケージを使用してナビゲーションを実行することができます。
+* [move_base](http://wiki.ros.org/move_base)
+* [neonavigation](https://github.com/at-wat/neonavigation)
 
 ## Usage
 
-### Raspberry Pi on Raspberry Pi Cat
+### Rosbag play
+#### SLAM
 
-`slam_remote_robot_*_urg.launch` starts up nodes in `urg_node`, `raspicat_gamepad_controller`, `rt_usb_9axisimu_driver` and `raspicat` to control the robot and publish LiDAR scan data, IMU data.
+* Gmapping
 
-* when USB URG is connected e.g.) [URG-04LX-UG01](https://www.hokuyo-aut.co.jp/search/single.php?serial=17), [UTM-30LX](https://www.hokuyo-aut.co.jp/search/single.php?serial=21)
-```sh
-roslaunch raspicat_slam slam_remote_robot_usb_urg.launch lidar_port:="/dev/ttyACM0" imu_port:="/dev/ttyACM1"
 ```
-If LiDAR is recognized by a device other than `/dev/ttyACM0` and IMU is recognized by a device other than `/dev/ttyACM1` (for example, LiDAR is `/dev/ttyACM1` and IMU is `/dev/ttyACM0`). You can specify the device to boot as follows.
-```sh
-roslaunch raspicat_slam slam_remote_robot_usb_urg.launch lidar_port:="/dev/ttyACM1" imu_port:="/dev/ttyACM0"
+roslaunch raspicat_slam raspicat_gmapping.launch rosbag:=true rosbag_rate:=1 rosbag_topics:="/odom /scan /tf /tf_static" rosbag_filename:=$(rospack find raspicat_slam)/config/rosbag/iscas_museum.bag
+roslaunch raspicat_slam map_save.launch map_file:=$(rospack find raspicat_slam)/config/maps/gmapping
 ```
 
-* when Ether URG is connected e.g.) [UST-10LX](https://www.hokuyo-aut.co.jp/search/single.php?serial=16), [UST-20LX](https://www.hokuyo-aut.co.jp/search/single.php?serial=16)
-```sh
-roslaunch raspicat_slam slam_remote_robot_ether_urg.launch ip_address:="192.168.0.10"
+* Cartographer
+
 ```
-* When not using the IMU.
- 
-For USB URG 
-```
-roslaunch raspicat_slam slam_remote_robot_usb_urg.launch lidar_port:="/dev/ttyACM0" imu_port:="/dev/ttyACM1" imu:="false"
-```
-For Ether URG 
-```
-roslaunch raspicat_slam slam_remote_robot_ether_urg.launch ip_address:="192.168.0.10" imu:="false"
+roslaunch raspicat_slam raspicat_cartographer.launch rosbag:=true rosbag_rate:=1 rosbag_topics:="/odom /scan /tf /tf_static" rosbag_rate:=1 rosbag_filename:=$(rospack find raspicat_slam)/config/rosbag/iscas_museum.bag
+roslaunch raspicat_slam map_save.launch map_file:=$(rospack find raspicat_slam)/config/maps/cartographer
 ```
 
+* Slam Toolbox
 
-### PC
+```
+roslaunch raspicat_slam raspicat_slam_toolbox.launch rosbag:=true rosbag_rate:=1 rosbag_topics:="/odom /scan /tf /tf_static" rosbag_rate:=1 rosbag_filename:=$(rospack find raspicat_slam)/config/rosbag/iscas_museum.bag
+roslaunch raspicat_slam map_save.launch map_file:=$(rospack find raspicat_slam)/config/maps/slam_toolbox
+```
 
-`slam_remote_pc.launch` starts up nodes for gmapping to SLAM.
+### Simulation
+#### SLAM
 
-```sh
-roslaunch raspicat_slam slam_remote_pc.launch
+* Gmapping
+
+```
+roslaunch raspicat_gazebo raspicat_iscas_museum.launch
+roslaunch raspicat_slam raspicat_gmapping.launch joy:=false
+roslaunch raspicat_slam map_save.launch map_file:=$(rospack find raspicat_slam)/config/maps/gmapping
+```
+
+* Cartographer
+
+```
+roslaunch raspicat_gazebo raspicat_iscas_museum.launch
+roslaunch raspicat_slam raspicat_cartographer.launch joy:=false
+roslaunch raspicat_slam map_save.launch map_file:=$(rospack find raspicat_slam)/config/maps/cartographer
+```
+
+* Slam Toolbox
+
+```
+roslaunch raspicat_gazebo raspicat_iscas_museum.launch
+roslaunch raspicat_slam raspicat_slam_toolbox.launch joy:=false
+roslaunch raspicat_slam map_save.launch map_file:=$(rospack find raspicat_slam)/config/maps/slam_toolbox
+```
+
+#### Navigation
+
+* move_base
+
+```
+roslaunch raspicat_gazebo raspicat_iscas_museum.launch
+roslaunch raspicat_navigation raspicat_navigation.launch navigation:="move_base"
+```
+
+* Neonavigation
+```
+roslaunch raspicat_gazebo raspicat_iscas_museum.launch
+roslaunch raspicat_navigation raspicat_navigation.launch navigation:="neonav"
+```
+
+### Actual machine
+#### SLAM
+* Gmapping
+##### Raspberry Pi 4
+```
+roscore
+roslaunch raspicat_bringup raspicat_bringup.launvch lidar_ether:=false lidar_usb:=true joy:=true
+```
+##### Remote PC
+```
+roslaunch raspicat_slam raspicat_gmapping.launch
+roslaunch raspicat_slam map_save.launch map_file:=$(rospack find raspicat_slam)/config/maps/gmapping
+```
+
+* Cartographer
+##### Raspberry Pi 4
+```
+roscore
+roslaunch raspicat_bringup raspicat_bringup.launvch lidar_ether:=false lidar_usb:=true joy:=true
+```
+##### Remote PC
+```
+roslaunch raspicat_slam raspicat_cartographer.launch
+roslaunch raspicat_slam map_save.launch map_file:=$(rospack find raspicat_slam)/config/maps/cartographer
+```
+
+* Slam Toolbox
+##### Raspberry Pi 4
+```
+roscore
+roslaunch raspicat_bringup raspicat_bringup.launvch lidar_ether:=false lidar_usb:=true joy:=true
+```
+##### Remote PC
+```
+roslaunch raspicat_slam raspicat_slam_toolbox.launch
+roslaunch raspicat_slam map_save.launch map_file:=$(rospack find raspicat_slam)/config/maps/slam_toolbox
+```
+
+#### Navigation
+* Move_base
+##### Raspberry Pi 4
+```
+roscore
+roslaunch raspicat_bringup raspicat_bringup.launvch lidar_ether:=false lidar_usb:=true joy:=false
+```
+##### Remote PC
+```
+roslaunch raspicat_navigation raspicat_navigation.launch navigation:="move_base"
+```
+
+* Neonavigation
+##### Raspberry Pi 4
+```
+roscore
+roslaunch raspicat_bringup raspicat_bringup.launvch lidar_ether:=false lidar_usb:=true joy:=false
+```
+##### Remote PC
+```
+roslaunch raspicat_navigation raspicat_navigation.launch navigation:="neonav"
 ```
 
 ## License
+(C) 2020-2022 RT Corporation
 
-(C) 2018 RT Corporation
+各ファイルはライセンスがファイル中に明記されている場合、そのライセンスに従います。特に明記されていない場合は、Apache License, Version 2.0に基づき公開されています。  
+ライセンスの全文は[LICENSE](./LICENSE)または[https://www.apache.org/licenses/LICENSE-2.0](https://www.apache.org/licenses/LICENSE-2.0)から確認できます。
 
-This repository is released under the Apache License 2.0, see [LICENSE](./LICENSE).
-
-### Acknowledgements
-
-Some of the launch files are delivered from [ryuichiueda/raspimouse_slam](https://github.com/ryuichiueda/raspimouse_slam/tree/with_gamepad).
-* "with_gamepad" branch on [ryuichiueda/raspimouse_slam](https://github.com/ryuichiueda/raspimouse_slam/tree/with_gamepad)
-  * `Copyright (c) 2018, Ryuichi Ueda`
-  * [BSD-3-Clause](https://github.com/ryuichiueda/raspimouse_slam/blob/21bebfb6bad103fc2cf8d2f4216539e1f2dee93a/LICENSE)
-
+※このソフトウェアは基本的にオープンソースソフトウェアとして「AS IS」（現状有姿のまま）で提供しています。本ソフトウェアに関する無償サポートはありません。  
+バグの修正や誤字脱字の修正に関するリクエストは常に受け付けていますが、それ以外の機能追加等のリクエストについては社内のガイドラインを優先します。

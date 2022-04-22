@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Arguments -->
+  <arg name="map_file" default="$(find raspicat_slam)/config/maps/iscas_museum_map"/>
+
+  <!-- Map server -->
+  <node pkg="map_server" name="map_saver" type="map_saver" 
+    args="-f $(arg map_file)" required="true" output="screen"/>
+</launch>

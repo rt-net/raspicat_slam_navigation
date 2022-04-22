@@ -1,0 +1,13 @@
+repositories:
+  raspicat/raspicat_ros:
+    type: git
+    url: https://github.com/rt-net/raspicat_ros.git
+    version: melodic-devel
+  raspicat/raspicat_description:
+    type: git
+    url: https://github.com/rt-net/raspicat_description.git
+    version: melodic-devel
+  raspicat/raspicat_slam_navigation:
+    type: git
+    url: https://github.com/rt-net/raspicat_slam_navigation.git
+    version: melodic-devel

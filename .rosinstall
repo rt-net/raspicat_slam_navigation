@@ -1,8 +1,0 @@
-- git:
-    local-name: raspicat_ros
-    uri: https://github.com/rt-net/raspicat_ros.git
-    version: melodic-devel
-- git:
-    local-name: raspicat_gamepad_controller
-    uri: https://github.com/rt-net/raspicat_gamepad_controller.git
-    version: melodic-devel
