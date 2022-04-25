@@ -40,13 +40,6 @@
     <remap from="map_local" to="overlay1"/>
   </node>
 
-  <node pkg="costmap_cspace" type="laserscan_to_map" name="laserscan_to_map" 
-        clear_params="true" output="$(arg output_info)">
-    <param name="global_frame"  value="$(arg global_frame)"/>
-    <param name="robot_frame"   value="$(arg base_frame)"/>
-    <remap from="map_local"     to="overlay2"/>
-  </node>
-
   <node pkg="trajectory_tracker" type="trajectory_tracker" name="trajectory_tracker" 
         clear_params="true" output="$(arg output_info)">
     <param name="frame_robot"   value="$(arg base_frame)"/>

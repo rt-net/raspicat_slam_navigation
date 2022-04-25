@@ -10,7 +10,7 @@
   <arg name="navigation"            default="move_base" doc="navigation type [move_base, neonav]"/>
 
   <!-- Map server -->
-   <node pkg="map_server" name="mcl_map_server" type="map_server" args="$(arg mcl_map_file)"/>
+  <node pkg="map_server" name="mcl_map_server" type="map_server" args="$(arg mcl_map_file)"/>
 
   <node pkg="map_server" name="move_base_map_server" type="map_server" args="$(arg navigation_map_file)">
     <remap from="map"         to="$(arg navigation_map_topic)"/>

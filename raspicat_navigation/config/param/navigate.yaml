@@ -18,12 +18,6 @@ costmap_3d:
     - name: stop_propagation
       type: Costmap3dLayerStopPropagation # Stop propagating parent layer's cost to the child. This can be used at the beginning of layer to ignore changes in static layers.
       overlay_mode: max
-    - name: overlay2
-      type: Costmap3dLayerFootprint # Configuration space costmap layer according to the given footprint.
-      overlay_mode: max
-      linear_expand: 0.08
-      linear_spread: 0.0
-      keep_unknown: true
     - name: overlay1
       type: Costmap3dLayerFootprint # Configuration space costmap layer according to the given footprint.
       overlay_mode: max
