@@ -97,6 +97,8 @@ roslaunch raspicat_slam raspicat_gmapping.launch rosbag:=true rosbag_rate:=1 ros
 roslaunch raspicat_slam map_save.launch map_file:=$(rospack find raspicat_slam)/config/maps/gmapping
 ```
 
+https://user-images.githubusercontent.com/40545422/166213251-22115ecb-11a2-4caa-95c7-c3b8e85db3ad.mp4
+
 * Cartographer
 
 ```
@@ -104,12 +106,16 @@ roslaunch raspicat_slam raspicat_cartographer.launch rosbag:=true rosbag_rate:=1
 roslaunch raspicat_slam map_save.launch map_file:=$(rospack find raspicat_slam)/config/maps/cartographer
 ```
 
+https://user-images.githubusercontent.com/40545422/166214138-624d3fd0-2bf8-46d7-a722-1602007df086.mp4
+
 * Slam Toolbox
 
 ```
 roslaunch raspicat_slam raspicat_slam_toolbox.launch rosbag:=true rosbag_rate:=1 rosbag_topics:="/odom /scan /tf /tf_static" rosbag_rate:=1 rosbag_filename:=$(rospack find raspicat_slam)/config/rosbag/iscas_museum.bag
 roslaunch raspicat_slam map_save.launch map_file:=$(rospack find raspicat_slam)/config/maps/slam_toolbox
 ```
+
+https://user-images.githubusercontent.com/40545422/166214198-38cf95ee-57ce-45bf-82d4-447f93419560.mp4
 
 ### Simulation
 #### SLAM
@@ -147,11 +153,15 @@ roslaunch raspicat_gazebo raspicat_iscas_museum.launch
 roslaunch raspicat_navigation raspicat_navigation.launch navigation:="move_base"
 ```
 
+https://user-images.githubusercontent.com/40545422/166214286-c78d74d1-cab1-489d-85fc-68416d48c655.mp4
+
 * Neonavigation
 ```
 roslaunch raspicat_gazebo raspicat_iscas_museum.launch
 roslaunch raspicat_navigation raspicat_navigation.launch navigation:="neonav"
 ```
+
+https://user-images.githubusercontent.com/40545422/166214304-23606730-3d8e-4ed4-9f9d-7834a3788aba.mp4
 
 ### Actual machine
 #### SLAM
