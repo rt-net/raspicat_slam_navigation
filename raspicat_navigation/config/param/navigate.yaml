@@ -1,0 +1,100 @@
+neonavigation_compatible: 1
+costmap_3d:
+  footprint: [[-0.37, -0.20], [-0.37, 0.20], [0.2, 0.20], [0.2, -0.20]]
+  ang_resolution: 16
+  linear_expand: 0.08
+  linear_spread: 0.3
+  static_layers: # static_layers: all cells in the costmap are updated at once (usually for global map)
+    - name: unknown
+      type: Costmap3dLayerUnknownHandle # Set unknown cell's cost.
+      unknown_cost: 100
+      overlay_mode: max
+    - name: overlay0
+      type: Costmap3dLayerPlain # Costmap layer without considering footprint.
+      overlay_mode: max
+      linear_expand: 0.0
+      linear_spread: 0.0
+  layers: # layers: the costmap can be partially (usually for local map)
+    - name: stop_propagation
+      type: Costmap3dLayerStopPropagation # Stop propagating parent layer's cost to the child. This can be used at the beginning of layer to ignore changes in static layers.
+      overlay_mode: max
+    - name: overlay1
+      type: Costmap3dLayerFootprint # Configuration space costmap layer according to the given footprint.
+      overlay_mode: max
+      linear_expand: 0.15
+      linear_spread: 0.3
+      keep_unknown: true
+largemap_to_map:
+  width: 120
+  hz: 1.5
+  round_local_map: false
+  simulate_occlusion: true
+planner_3d:
+  goal_tolerance_lin: 0.4
+  goal_tolerance_ang: 0.4
+  goal_tolerance_ang_finish: 2
+  unknown_cost: 80
+  hist_cost: 70
+  hist_cnt_max: 20
+  hist_cnt_thres: 19
+  hist_ignore_range: 0.0
+  hist_ignore_range_max: 1.5
+  num_threads: 3
+  freq: 5.0
+  freq_min: 0.1
+  local_range: 2.0
+  longcut_range: 0.7
+  esc_range: 0.25
+  find_best: true
+  remember_updates: true
+  fast_map_update: true
+  force_goal_orientation: false
+  pos_jump: 5.0
+  yaw_jump: 2.0
+  temporary_escape: false
+  queue_size_limit: 0
+  antialias_start: true
+  search_range: 0.5
+  costmap_watchdog: 0.0
+  max_vel: 1
+  max_ang_vel: 1
+  min_curve_radius: 1.0
+  overwrite_cost: false
+  remember_hit_prob: 0.6
+  remember_miss_prob: 0.3
+  sw_wait: 0.0
+trajectory_tracker:
+  hz: 20.0
+  acc_toc_factor: 0.9
+  allow_backward: true
+  angacc_toc_factor: 0.9
+  check_old_path: false
+  dist_lim: 0.5
+  dist_stop: 2.0
+  epsilon: 0.0001
+  gain_at_vel: 0.0
+  goal_tolerance_ang: 0.05
+  goal_tolerance_ang_vel: 0.0
+  goal_tolerance_dist: 0.05
+  goal_tolerance_lin_vel: 0.0
+  stop_tolerance_ang: 0.1
+  stop_tolerance_dist: 0.1
+  k_ang: 1.0
+  k_ang_rotation: 0.1
+  k_avel: 4.0
+  k_avel_rotation: 1.0
+  k_dist: 16.0
+  limit_vel_by_avel: true
+  look_forward: 0.1
+  curv_forward: 0.5
+  min_tracking_path: 0.0
+  no_position_control_dist: 0.05
+  path_step: 1
+  rotate_ang: 0.2
+  time_optimal_control_future_gain: 1.5
+  use_time_optimal_control: true
+safety_limiter:
+  footprint: [[-0.37, -0.20], [-0.37, 0.20], [0.2, 0.20], [0.2, -0.20]]
+  cloud_timeout: 0.8
+  allow_empty_cloud: true
+  watchdog_interval: 0.0

@@ -1,0 +1,27 @@
+base_frame: base_footprint
+map_frame: map
+odom_frame: odom
+
+maxUrange: 20.0
+maxRange: 30.0
+occ_thresh: 0.2
+delta: 0.05
+
+particles: 120
+iterations: 5
+astep: 0.05
+
+srr: 0.03
+srt: 0.04
+str: 0.05
+stt: 0.05
+
+linearUpdate: 0.1
+angularUpdate: 0.1
+temporalUpdate: 0.1
+map_update_interval: 1.0
+
+xmin: -0.0
+ymin: -0.0
+xmax: 0.0
+ymax: 0.0
