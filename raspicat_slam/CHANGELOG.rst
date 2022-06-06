@@ -2,8 +2,8 @@
 Changelog for package raspicat_slam
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.1.0 (2022-06-06)
+------------------
 * Release raspicat_slam_navigation (`#7 <https://github.com/rt-net/raspicat_slam_navigation_develop/issues/7>`_)
   * Release raspicat_slam_navigation
   * Create raspicat_navigation package
