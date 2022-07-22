@@ -21,6 +21,9 @@ include_directories(
 add_library(lightsensors_to_laserscan
   src/lightsensors_to_laserscan.cpp
 )
+add_dependencies(lightsensors_to_laserscan
+  ${TARGET_NAME} raspimouse_msgs_generate_messages_cpp
+)
 add_executable(lightsensors_to_laserscan_node
   src/lightsensors_to_laserscan_node.cpp
 )
