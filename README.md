@@ -25,7 +25,6 @@ Raspberry Pi CatでSLAMやナビゲーションを行うためのROSメタパッ
 ```sh
 # パッケージのダウンロード
 cd ~/catkin_ws/src
-wget 
 git clone -b $ROS_DISTRO-devel https://github.com/rt-net/raspicat_slam_navigation.git
 git clone -b $ROS_DISTRO-devel https://github.com/rt-net/raspicat_description.git
 git clone -b $ROS_DISTRO-devel https://github.com/rt-net/raspicat_ros.git
@@ -123,7 +122,7 @@ https://user-images.githubusercontent.com/40545422/166214198-38cf95ee-57ce-45bf-
 * Gmapping
 
 ```
-roslaunch raspicat_gazebo raspicat_iscas_museum.launch
+roslaunch raspicat_gazebo raspicat_iscas_museum.launch rviz:=false
 roslaunch raspicat_slam raspicat_gmapping.launch joy:=false
 roslaunch raspicat_slam map_save.launch map_file:=$(rospack find raspicat_slam)/config/maps/gmapping
 ```
@@ -131,7 +130,7 @@ roslaunch raspicat_slam map_save.launch map_file:=$(rospack find raspicat_slam)/
 * Cartographer
 
 ```
-roslaunch raspicat_gazebo raspicat_iscas_museum.launch
+roslaunch raspicat_gazebo raspicat_iscas_museum.launch rviz:=false
 roslaunch raspicat_slam raspicat_cartographer.launch joy:=false
 roslaunch raspicat_slam map_save.launch map_file:=$(rospack find raspicat_slam)/config/maps/cartographer
 ```
@@ -139,7 +138,7 @@ roslaunch raspicat_slam map_save.launch map_file:=$(rospack find raspicat_slam)/
 * Slam Toolbox
 
 ```
-roslaunch raspicat_gazebo raspicat_iscas_museum.launch
+roslaunch raspicat_gazebo raspicat_iscas_museum.launch rviz:=false
 roslaunch raspicat_slam raspicat_slam_toolbox.launch joy:=false
 roslaunch raspicat_slam map_save.launch map_file:=$(rospack find raspicat_slam)/config/maps/slam_toolbox
 ```
@@ -149,7 +148,7 @@ roslaunch raspicat_slam map_save.launch map_file:=$(rospack find raspicat_slam)/
 * move_base
 
 ```
-roslaunch raspicat_gazebo raspicat_iscas_museum.launch
+roslaunch raspicat_gazebo raspicat_iscas_museum.launch rviz:=false
 roslaunch raspicat_navigation raspicat_navigation.launch navigation:="move_base"
 ```
 
@@ -157,7 +156,7 @@ https://user-images.githubusercontent.com/40545422/166214286-c78d74d1-cab1-489d-
 
 * Neonavigation
 ```
-roslaunch raspicat_gazebo raspicat_iscas_museum.launch
+roslaunch raspicat_gazebo raspicat_iscas_museum.launch rviz:=false
 roslaunch raspicat_navigation raspicat_navigation.launch navigation:="neonav"
 ```
 
@@ -169,7 +168,7 @@ https://user-images.githubusercontent.com/40545422/166214304-23606730-3d8e-4ed4-
 ##### Raspberry Pi 4
 ```
 roscore
-roslaunch raspicat_bringup raspicat_bringup.launvch lidar_ether:=false lidar_usb:=true joy:=true
+roslaunch raspicat_bringup raspicat_bringup.launch lidar_ether:=false lidar_usb:=true joy:=true
 ```
 ##### Remote PC
 ```
@@ -181,7 +180,7 @@ roslaunch raspicat_slam map_save.launch map_file:=$(rospack find raspicat_slam)/
 ##### Raspberry Pi 4
 ```
 roscore
-roslaunch raspicat_bringup raspicat_bringup.launvch lidar_ether:=false lidar_usb:=true joy:=true
+roslaunch raspicat_bringup raspicat_bringup.launch lidar_ether:=false lidar_usb:=true joy:=true
 ```
 ##### Remote PC
 ```
@@ -193,7 +192,7 @@ roslaunch raspicat_slam map_save.launch map_file:=$(rospack find raspicat_slam)/
 ##### Raspberry Pi 4
 ```
 roscore
-roslaunch raspicat_bringup raspicat_bringup.launvch lidar_ether:=false lidar_usb:=true joy:=true
+roslaunch raspicat_bringup raspicat_bringup.launch lidar_ether:=false lidar_usb:=true joy:=true
 ```
 ##### Remote PC
 ```
@@ -206,7 +205,7 @@ roslaunch raspicat_slam map_save.launch map_file:=$(rospack find raspicat_slam)/
 ##### Raspberry Pi 4
 ```
 roscore
-roslaunch raspicat_bringup raspicat_bringup.launvch lidar_ether:=false lidar_usb:=true joy:=false
+roslaunch raspicat_bringup raspicat_bringup.launch lidar_ether:=false lidar_usb:=true joy:=false
 ```
 ##### Remote PC
 ```
@@ -217,7 +216,7 @@ roslaunch raspicat_navigation raspicat_navigation.launch navigation:="move_base"
 ##### Raspberry Pi 4
 ```
 roscore
-roslaunch raspicat_bringup raspicat_bringup.launvch lidar_ether:=false lidar_usb:=true joy:=false
+roslaunch raspicat_bringup raspicat_bringup.launch lidar_ether:=false lidar_usb:=true joy:=false
 ```
 ##### Remote PC
 ```
