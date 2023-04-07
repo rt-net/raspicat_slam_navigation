@@ -32,32 +32,37 @@ from nav2_common.launch import RewrittenYaml
 def generate_launch_description():
     namespace = LaunchConfiguration('namespace')
     use_sim_time = LaunchConfiguration('use_sim_time')
-    autostart = LaunchConfiguration('autostart')
-    params_file = LaunchConfiguration('params_file')
     use_composition = LaunchConfiguration('use_composition')
+    use_rviz = LaunchConfiguration('use_rviz')
+    autostart = LaunchConfiguration('autostart')
+    map_yaml_file = LaunchConfiguration('map')
+    params_file = LaunchConfiguration('params_file')
     container_name = LaunchConfiguration('container_name')
-    container_name_full = (namespace, '/', container_name)
     use_respawn = LaunchConfiguration('use_respawn')
     log_level = LaunchConfiguration('log_level')
-    
-    use_sim_time = LaunchConfiguration('use_sim_time', default='false')
-    map_yaml_file = LaunchConfiguration('map', default=os.path.join(
-                get_package_share_directory('raspicat_slam'),
-                'config', 'maps', 'iscas_museum_map.yaml'))
-
-    param_substitutions = {
-        'use_sim_time': use_sim_time,
-        'yaml_filename': map_yaml_file}
-    
-    configured_params = RewrittenYaml(
-        source_file=params_file,
-        param_rewrites=param_substitutions,
-        convert_types=True)
 
     declare_namespace_cmd = DeclareLaunchArgument(
         'namespace',
         default_value='',
         description='Top-level namespace')
+
+    declare_use_sim_time_cmd = DeclareLaunchArgument(
+        'use_sim_time',
+        default_value='False',
+        description='Use simulation (Gazebo) clock if true')
+
+    declare_use_composition_cmd = DeclareLaunchArgument(
+        'use_composition', default_value='False',
+        description='Use composed bringup if True')
+
+    declare_autostart_cmd = DeclareLaunchArgument(
+        'autostart', default_value='True',
+        description='Automatically startup the nav2 stack')
+
+    declare_arg_use_rviz = DeclareLaunchArgument(
+        'use_rviz',
+        default_value='true',
+        description='Set "true" to launch rviz.')
 
     declare_map_yaml_cmd = DeclareLaunchArgument(
         'map', default_value=os.path.join(
@@ -65,25 +70,12 @@ def generate_launch_description():
                 'config', 'maps', 'iscas_museum_map.yaml'),
         description='Full path to map yaml file to load')
 
-    declare_use_sim_time_cmd = DeclareLaunchArgument(
-        'use_sim_time',
-        default_value='False',
-        description='Use simulation (Gazebo) clock if true')
-
     declare_params_file_cmd = DeclareLaunchArgument(
         'params_file',
         default_value=os.path.join(
                 get_package_share_directory('raspicat_navigation'),
                 'config', 'param', 'nav2.param.yaml'),
         description='Full path to the ROS2 parameters file to use for all launched nodes')
-
-    declare_autostart_cmd = DeclareLaunchArgument(
-        'autostart', default_value='True',
-        description='Automatically startup the nav2 stack')
-
-    declare_use_composition_cmd = DeclareLaunchArgument(
-        'use_composition', default_value='False',
-        description='Use composed bringup if True')
 
     declare_container_name_cmd = DeclareLaunchArgument(
         'container_name', default_value='nav2_container',
@@ -96,11 +88,18 @@ def generate_launch_description():
     declare_log_level_cmd = DeclareLaunchArgument(
         'log_level', default_value='info',
         description='log level')
+
+    container_name_full = (namespace, '/', container_name)
+
+    param_substitutions = {
+        'use_sim_time': use_sim_time,
+        'yaml_filename': map_yaml_file}
     
-    declare_arg_use_rviz = DeclareLaunchArgument(
-        'use_rviz',
-        default_value='true',
-        description='Set "true" to launch rviz.')
+    configured_params = RewrittenYaml(
+        source_file=params_file,
+        root_key=namespace,
+        param_rewrites=param_substitutions,
+        convert_types=True)
     
     lifecycle_nodes = [
                        'map_server',
@@ -313,7 +312,7 @@ def generate_launch_description():
                      name='rviz2',
                      output='log',
                      arguments=['-d', rviz_config_file],
-                     condition=IfCondition(LaunchConfiguration('use_rviz')))
+                     condition=IfCondition(use_rviz))
 
     ld = LaunchDescription()
 
@@ -333,3 +332,4 @@ def generate_launch_description():
     
     ld.add_action(rviz)
     return ld
+ 
