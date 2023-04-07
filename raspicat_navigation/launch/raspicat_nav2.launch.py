@@ -41,21 +41,21 @@ def generate_launch_description():
     use_respawn = LaunchConfiguration('use_respawn')
     log_level = LaunchConfiguration('log_level')
 
-    declare_namespace_cmd = DeclareLaunchArgument(
+    declare_namespace = DeclareLaunchArgument(
         'namespace',
         default_value='',
         description='Top-level namespace')
 
-    declare_use_sim_time_cmd = DeclareLaunchArgument(
+    declare_use_sim_time = DeclareLaunchArgument(
         'use_sim_time',
         default_value='False',
         description='Use simulation (Gazebo) clock if true')
 
-    declare_use_composition_cmd = DeclareLaunchArgument(
+    declare_use_composition = DeclareLaunchArgument(
         'use_composition', default_value='False',
         description='Use composed bringup if True')
 
-    declare_autostart_cmd = DeclareLaunchArgument(
+    declare_autostart = DeclareLaunchArgument(
         'autostart', default_value='True',
         description='Automatically startup the nav2 stack')
 
@@ -64,28 +64,28 @@ def generate_launch_description():
         default_value='true',
         description='Set "true" to launch rviz.')
 
-    declare_map_yaml_cmd = DeclareLaunchArgument(
+    declare_map_yaml = DeclareLaunchArgument(
         'map', default_value=os.path.join(
                 get_package_share_directory('raspicat_slam'),
                 'config', 'maps', 'iscas_museum_map.yaml'),
         description='Full path to map yaml file to load')
 
-    declare_params_file_cmd = DeclareLaunchArgument(
+    declare_params_file = DeclareLaunchArgument(
         'params_file',
         default_value=os.path.join(
                 get_package_share_directory('raspicat_navigation'),
                 'config', 'param', 'nav2.param.yaml'),
         description='Full path to the ROS2 parameters file to use for all launched nodes')
 
-    declare_container_name_cmd = DeclareLaunchArgument(
+    declare_container_name = DeclareLaunchArgument(
         'container_name', default_value='nav2_container',
         description='the name of conatiner that nodes will load in if use composition')
 
-    declare_use_respawn_cmd = DeclareLaunchArgument(
+    declare_use_respawn = DeclareLaunchArgument(
         'use_respawn', default_value='False',
         description='Whether to respawn if a node crashes. Applied when composition is disabled.')
 
-    declare_log_level_cmd = DeclareLaunchArgument(
+    declare_log_level = DeclareLaunchArgument(
         'log_level', default_value='info',
         description='log level')
 
@@ -316,15 +316,15 @@ def generate_launch_description():
 
     ld = LaunchDescription()
 
-    ld.add_action(declare_namespace_cmd)
-    ld.add_action(declare_map_yaml_cmd)
-    ld.add_action(declare_use_sim_time_cmd)
-    ld.add_action(declare_params_file_cmd)
-    ld.add_action(declare_autostart_cmd)
-    ld.add_action(declare_use_composition_cmd)
-    ld.add_action(declare_container_name_cmd)
-    ld.add_action(declare_use_respawn_cmd)
-    ld.add_action(declare_log_level_cmd)
+    ld.add_action(declare_namespace)
+    ld.add_action(declare_map_yaml)
+    ld.add_action(declare_use_sim_time)
+    ld.add_action(declare_params_file)
+    ld.add_action(declare_autostart)
+    ld.add_action(declare_use_composition)
+    ld.add_action(declare_container_name)
+    ld.add_action(declare_use_respawn)
+    ld.add_action(declare_log_level)
     ld.add_action(declare_arg_use_rviz)
 
     ld.add_action(load_nodes)
