@@ -66,16 +66,16 @@ def generate_launch_description():
 
     declare_map_yaml = DeclareLaunchArgument(
         'map', default_value=os.path.join(
-                get_package_share_directory('raspicat_slam'),
+            get_package_share_directory('raspicat_slam'),
                 'config', 'maps', 'iscas_museum_map.yaml'),
-        description='Full path to map yaml file to load')
+                description='Full path to map yaml file to load')
 
     declare_params_file = DeclareLaunchArgument(
         'params_file',
         default_value=os.path.join(
-                get_package_share_directory('raspicat_navigation'),
+            get_package_share_directory('raspicat_navigation'),
                 'config', 'param', 'nav2.param.yaml'),
-        description='Full path to the ROS2 parameters file to use for all launched nodes')
+                description='Full path to the ROS2 parameters file to use for all launched nodes')
 
     declare_container_name = DeclareLaunchArgument(
         'container_name', default_value='nav2_container',
@@ -102,15 +102,15 @@ def generate_launch_description():
         convert_types=True)
     
     lifecycle_nodes = [
-                       'map_server',
-                       'amcl',
-                       'controller_server',
-                       'smoother_server',
-                       'planner_server',
-                       'behavior_server',
-                       'bt_navigator',
-                       'waypoint_follower',
-                       'velocity_smoother']
+        'map_server',
+        'amcl',
+        'controller_server',
+        'smoother_server',
+        'planner_server',
+        'behavior_server',
+        'bt_navigator',
+        'waypoint_follower',
+        'velocity_smoother']
 
     remappings = [('/tf', 'tf'),
                   ('/tf_static', 'tf_static')]
@@ -308,11 +308,11 @@ def generate_launch_description():
     rviz_config_file = os.path.join(get_package_share_directory('raspicat_navigation'), 
                                     'config', 'rviz', 'nav2.rviz')
     rviz = Node(package='rviz2',
-                     executable='rviz2',
-                     name='rviz2',
-                     output='log',
-                     arguments=['-d', rviz_config_file],
-                     condition=IfCondition(use_rviz))
+        executable='rviz2',
+        name='rviz2',
+        output='log',
+        arguments=['-d', rviz_config_file],
+        condition=IfCondition(use_rviz))
 
     ld = LaunchDescription()
 
@@ -331,5 +331,6 @@ def generate_launch_description():
     ld.add_action(load_composable_nodes)
     
     ld.add_action(rviz)
+    
     return ld
  

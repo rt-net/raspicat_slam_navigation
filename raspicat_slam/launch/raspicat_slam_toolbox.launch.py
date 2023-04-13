@@ -37,31 +37,25 @@ def generate_launch_description():
         'namespace',
         default_value='',
         description='Top-level namespace')
-    
     declare_use_sim_time = DeclareLaunchArgument(
         'use_sim_time',
         default_value='False',
         description='Use simulation (Gazebo) clock if true')
-
     declare_autostart = DeclareLaunchArgument(
         'autostart', default_value='True',
         description='Automatically startup the nav2 stack')
-    
     declare_arg_use_rviz = DeclareLaunchArgument(
         'use_rviz',
         default_value='true',
         description='Set "true" to launch rviz.')
-
     declare_slam_toolbox_params_file = DeclareLaunchArgument(
         'slam_toolbox_params_file',
         default_value=os.path.join(get_package_share_directory("raspicat_slam"),
                                    'config', 'param', 'slam_toolbox.param.yaml'),
         description='Full path to the ROS2 parameters file to use for the slam_toolbox node')
-
     declare_use_respawn = DeclareLaunchArgument(
         'use_respawn', default_value='False',
         description='Whether to respawn if a node crashes. Applied when composition is disabled.')
-
     declare_log_level = DeclareLaunchArgument(
         'log_level', default_value='info',
         description='log level')
@@ -75,42 +69,44 @@ def generate_launch_description():
         param_rewrites=param_substitutions,
         convert_types=True)
 
+    rviz_config_file = os.path.join(
+        get_package_share_directory('raspicat_slam'), 
+            'config', 'rviz', 'slam_toolbox.rviz')
+
     lifecycle_nodes = ['map_saver']
 
     map_saver_server = Node(
-            package='nav2_map_server',
-            executable='map_saver_server',
-            output='screen',
-            respawn=use_respawn,
-            respawn_delay=2.0,
-            arguments=['--ros-args', '--log-level', log_level],
-            parameters=[configured_params])
+        package='nav2_map_server',
+        executable='map_saver_server',
+        output='screen',
+        respawn=use_respawn,
+        respawn_delay=2.0,
+        arguments=['--ros-args', '--log-level', log_level],
+        parameters=[configured_params])
 
     lifecycle_manager = Node(
-            package='nav2_lifecycle_manager',
-            executable='lifecycle_manager',
-            name='lifecycle_manager_slam',
-            output='screen',
-            arguments=['--ros-args', '--log-level', log_level],
-            parameters=[{'use_sim_time': use_sim_time},
-                        {'autostart': autostart},
-                        {'node_names': lifecycle_nodes}])
-
+        package='nav2_lifecycle_manager',
+        executable='lifecycle_manager',
+        name='lifecycle_manager_slam',
+        output='screen',
+        arguments=['--ros-args', '--log-level', log_level],
+        parameters=[{'use_sim_time': use_sim_time},
+                    {'autostart': autostart},
+                    {'node_names': lifecycle_nodes}])
+    
     slam_toolbox = Node(
         package='slam_toolbox',
         executable='async_slam_toolbox_node',
         name='slam_toolbox',
         output='screen',
-        parameters=[configured_params],)
+        parameters=[configured_params],)    
     
-    rviz_config_file = os.path.join(get_package_share_directory('raspicat_slam'), 
-                                    'config', 'rviz', 'slam_toolbox.rviz')
     rviz = Node(package='rviz2',
-                     executable='rviz2',
-                     name='rviz2',
-                     output='log',
-                     arguments=['-d', rviz_config_file],
-                     condition=IfCondition(use_rviz))
+        executable='rviz2',
+        name='rviz2',
+        output='log',
+        arguments=['-d', rviz_config_file],
+        condition=use_rviz)
 
     ld = LaunchDescription()
 
