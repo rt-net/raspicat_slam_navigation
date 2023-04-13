@@ -101,12 +101,13 @@ def generate_launch_description():
         output='screen',
         parameters=[configured_params],)    
     
-    rviz2 = Node(package='rviz2',
+    rviz2 = Node(
+        package='rviz2',
         executable='rviz2',
         name='rviz2',
         output='log',
         arguments=['-d', rviz_config_file],
-        condition=use_rviz)
+        condition=IfCondition(use_rviz))
 
     ld = LaunchDescription()
 
