@@ -303,7 +303,7 @@ def generate_launch_description():
         name='rviz2',
         output='log',
         arguments=['-d', rviz_config_file],
-        condition=use_rviz)
+        condition=IfCondition(use_rviz))
 
     ld = LaunchDescription()
 
