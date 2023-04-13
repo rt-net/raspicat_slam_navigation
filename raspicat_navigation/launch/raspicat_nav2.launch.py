@@ -45,46 +45,37 @@ def generate_launch_description():
         'namespace',
         default_value='',
         description='Top-level namespace')
-
     declare_use_sim_time = DeclareLaunchArgument(
         'use_sim_time',
         default_value='False',
         description='Use simulation (Gazebo) clock if true')
-
     declare_use_composition = DeclareLaunchArgument(
         'use_composition', default_value='False',
         description='Use composed bringup if True')
-
     declare_autostart = DeclareLaunchArgument(
         'autostart', default_value='True',
         description='Automatically startup the nav2 stack')
-
     declare_arg_use_rviz = DeclareLaunchArgument(
         'use_rviz',
         default_value='true',
         description='Set "true" to launch rviz.')
-
     declare_map_yaml = DeclareLaunchArgument(
         'map', default_value=os.path.join(
             get_package_share_directory('raspicat_slam'),
                 'config', 'maps', 'iscas_museum_map.yaml'),
                 description='Full path to map yaml file to load')
-
     declare_params_file = DeclareLaunchArgument(
         'params_file',
         default_value=os.path.join(
             get_package_share_directory('raspicat_navigation'),
                 'config', 'param', 'nav2.param.yaml'),
                 description='Full path to the ROS2 parameters file to use for all launched nodes')
-
     declare_container_name = DeclareLaunchArgument(
         'container_name', default_value='nav2_container',
         description='the name of conatiner that nodes will load in if use composition')
-
     declare_use_respawn = DeclareLaunchArgument(
         'use_respawn', default_value='False',
         description='Whether to respawn if a node crashes. Applied when composition is disabled.')
-
     declare_log_level = DeclareLaunchArgument(
         'log_level', default_value='info',
         description='log level')
@@ -307,12 +298,12 @@ def generate_launch_description():
 
     rviz_config_file = os.path.join(get_package_share_directory('raspicat_navigation'), 
                                     'config', 'rviz', 'nav2.rviz')
-    rviz = Node(package='rviz2',
+    rviz2 = Node(package='rviz2',
         executable='rviz2',
         name='rviz2',
         output='log',
         arguments=['-d', rviz_config_file],
-        condition=IfCondition(use_rviz))
+        condition=use_rviz)
 
     ld = LaunchDescription()
 
@@ -330,7 +321,7 @@ def generate_launch_description():
     ld.add_action(load_nodes)
     ld.add_action(load_composable_nodes)
     
-    ld.add_action(rviz)
+    ld.add_action(rviz2)
     
     return ld
  

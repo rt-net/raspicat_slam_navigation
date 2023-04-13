@@ -101,7 +101,7 @@ def generate_launch_description():
         output='screen',
         parameters=[configured_params],)    
     
-    rviz = Node(package='rviz2',
+    rviz2 = Node(package='rviz2',
         executable='rviz2',
         name='rviz2',
         output='log',
@@ -122,6 +122,6 @@ def generate_launch_description():
     ld.add_action(lifecycle_manager)
 
     ld.add_action(slam_toolbox)
-    ld.add_action(rviz)
+    ld.add_action(rviz2)
 
     return ld
