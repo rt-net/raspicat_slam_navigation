@@ -28,12 +28,13 @@ cd ~/catkin_ws/src
 git clone -b ros2 https://github.com/rt-net/raspicat_slam_navigation.git
 git clone -b ros2 https://github.com/rt-net/raspicat_description.git
 git clone -b ros2 https://github.com/rt-net/raspicat_ros.git
+git clone -b $ROS_DISTRO-devel https://github.com/rt-net/raspimouse2
 ```
 
 ```sh
 # 依存パッケージのインストール
 rosdep update
-rosdep install -r -y -i --from-paths .
+rosdep install -r -y -i --from-paths raspicat* raspimouse*
 ```
 
 ```sh
@@ -55,7 +56,7 @@ git clone -b ros2 https://github.com/rt-net/raspicat_ros.git
 ```sh
 # 依存パッケージのインストール
 rosdep update
-rosdep install -r -y -i --from-paths .
+rosdep install -r -y -i --from-paths raspicat* raspimouse*
 ```
 
 ```sh
@@ -82,6 +83,24 @@ SLAMを行うためのパッケージです。
 
 ## Usage
 
+### Simulation
+#### SLAM
+* Slam Toolbox
+```
+ros2 launch raspicat_gazebo raspicat_with_iscas_museum.launch.py
+ros2 launch raspicat_slam raspicat_slam_toolbox.launch.py
+ros2 launch raspicat_bringup teleop.launch.py teleop:=joy
+ros2 service call /motor_power std_srvs/SetBool '{data: true}'
+```
+
+#### Navigation
+* Navigation 2
+```
+ros2 launch raspicat_gazebo raspicat_with_iscas_museum.launch.py
+ros2 launch raspicat_navigation raspicat_nav2.launch.py
+ros2 service call /motor_power std_srvs/SetBool '{data: true}'
+```
+
 ### Actual machine
 #### SLAM
 * Slam Toolbox
@@ -92,7 +111,8 @@ ros2 launch raspicat raspicat.launch.py
 ##### Remote PC
 ```
 ros2 launch raspicat_slam raspicat_slam_toolbox.launch.py
-ros2 launch raspicat_bringup joy.launch.py
+ros2 launch raspicat_bringup teleop.launch.py teleop:=joy
+ros2 service call /motor_power std_srvs/SetBool '{data: true}'
 ```
 
 #### Navigation
@@ -104,6 +124,7 @@ ros2 launch raspicat raspicat.launch.py
 ##### Remote PC
 ```
 ros2 launch raspicat_navigation raspicat_nav2.launch.py
+ros2 service call /motor_power std_srvs/SetBool '{data: true}'
 ```
 
 ## License
