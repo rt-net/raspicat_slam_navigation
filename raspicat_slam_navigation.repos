@@ -11,3 +11,7 @@ repositories:
     type: git
     url: https://github.com/rt-net/raspicat_slam_navigation.git
     version: ros2
+  raspicat/raspimouse2:
+    type: git
+    url: https://github.com/rt-net/raspimouse2
+    version: humble-devel
